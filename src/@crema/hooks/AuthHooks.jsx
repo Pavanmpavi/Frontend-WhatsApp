@@ -1,0 +1,136 @@
+/*// ForJWT Auth
+import {getUserFromJwtAuth} from '@crema/helpers/AuthHelper';
+import {
+  useJWTAuth,
+  useJWTAuthActions,
+} from '@crema/services/auth/jwt-auth/JWTAuthProvider';
+
+export const useAuthUser = () => {
+  const {user, isAuthenticated, isLoading} = useJWTAuth();
+  return {
+    isLoading,
+    isAuthenticated,
+    user: getUserFromJwtAuth(user),
+  };
+};
+
+export const useAuthMethod = () => {
+  const {signInUser, signUpUser, logout} = useJWTAuthActions();
+
+  return {
+    signInUser,
+    logout,
+    signUpUser,
+  };
+};*/
+//For Firebase Auth
+
+// import { useFirebase, useFirebaseActions } from '@crema/services/auth/firebase/FirebaseAuthProvider';
+// import { getUserFromFirebase } from '@crema/helpers/AuthHelper';
+
+// export const useAuthUser = () => {
+//   const { user, isAuthenticated, isLoading } = useFirebase();
+//   return {
+//     isLoading,
+//     isAuthenticated,
+//     user: getUserFromFirebase(user),
+//   };
+// };
+
+// export const useAuthMethod = () => {
+//     const {
+//         logInWithEmailAndPassword,
+//         registerUserWithEmailAndPassword,
+//         logInWithPopup,
+//         logout,
+//     } = useFirebaseActions();
+
+//     return {
+//         logInWithEmailAndPassword,
+//         registerUserWithEmailAndPassword,
+//         logInWithPopup,
+//         logout,
+//     };
+// };
+// src/hooks/AuthHooks.js
+import { getUserFromJwtAuth } from '@crema/helpers/AuthHelper';
+import {
+  useJWTAuth,
+  useJWTAuthActions,
+} from '../../@crema/services/auth/jwt-auth/JWTAuthProvider'; // Updated import path
+
+export const useAuthUser = () => {
+  const { user, isAuthenticated, isLoading } = useJWTAuth();
+  const parsedUser = getUserFromJwtAuth(user); // Extract user info from token or backend response
+console.log("pp",user);
+
+  // Safely handle the case where `role` could be a string or an array
+  const userRole = Array.isArray(parsedUser?.role)
+    ? parsedUser.role
+    : parsedUser?.role
+    ? [parsedUser.role]
+    : [];
+
+  return {
+    isLoading,
+    isAuthenticated,
+    user: parsedUser,
+    role: userRole, // Always returns an array, e.g., ['admin']
+  };
+};
+
+export const useAuthMethod = () => {
+  const { signInUser, signUpUser, logout } = useJWTAuthActions();
+
+  return {
+    signInUser,
+    logout,
+    signUpUser,
+  };
+};
+/*// For AWS Auth
+import {getUserFromAWS} from '@crema/helpers/AuthHelper';
+import {useAwsCognito, useAwsCognitoActions} from '../services/auth';
+
+export const useAuthUser = () => {
+  // eslint-disable-next-line no-undef
+  const {auth, user, isAuthenticated, isLoading} = useAwsCognito();
+  return {
+    auth,
+    isLoading,
+    isAuthenticated,
+    user: getUserFromAWS(user),
+  };
+};
+
+export const useAuthMethod = () => {
+  const {signIn, signUpCognitoUser, confirmCognitoUserSignup, logout} =
+    useAwsCognitoActions();
+
+  return {
+    signIn,
+    signUpCognitoUser,
+    confirmCognitoUserSignup,
+    logout,
+  };
+};*/
+/*
+
+//For Auth0
+import {useAuth0} from '@auth0/auth0-react';
+import {getUserFromAuth0} from '@crema/helpers/AuthHelper';
+
+export const useAuthUser = () => {
+  const {user, isAuthenticated, isLoading} = useAuth0();
+  return {
+    isLoading,
+    isAuthenticated,
+    user: () => getUserFromAuth0(user),
+  };
+};
+
+export const useAuthMethod = () => {
+  const {loginWithRedirect, logout} = useAuth0();
+  return {loginWithRedirect, logout};
+};
+*/

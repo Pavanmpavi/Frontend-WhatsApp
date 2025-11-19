@@ -1,0 +1,47 @@
+import * as React from 'react';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { DataGrid } from '@mui/x-data-grid';
+
+export const SortedDescendingIcon=()=> {
+  return <ExpandMoreIcon className="icon" />;
+}
+
+export const SortedAscendingIcon=()=> {
+  return <ExpandLessIcon className="icon" />;
+}
+
+const rows = [
+  {
+    id: 1,
+    name: 'MUI',
+    stars: 28000,
+  },
+  {
+    id: 2,
+    name: 'DataGrid',
+    stars: 15000,
+  },
+];
+
+const columns = [
+  { field: 'name', width: 150 },
+  { field: 'stars', width: 150 },
+];
+
+const CustomSortIcons=()=> {
+  return (
+    <div style={{ height: 250, width: '100%' }}>
+      <DataGrid
+        columns={columns}
+        rows={rows}
+        sortModel={[{ field: 'name', sort: 'asc' }]}
+        slots={{
+          columnSortedDescendingIcon: SortedDescendingIcon,
+          columnSortedAscendingIcon: SortedAscendingIcon,
+        }}
+      />
+    </div>
+  );
+}
+export default CustomSortIcons

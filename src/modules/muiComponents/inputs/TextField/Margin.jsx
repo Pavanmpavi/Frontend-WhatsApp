@@ -1,0 +1,39 @@
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+
+const RedBar=()=> {
+  return (
+    <Box
+      sx={(theme) => ({
+        height: 20,
+        backgroundColor: 'rgb(255 132 132 / 25%)',
+
+        ...theme.applyStyles('light', {
+          backgroundColor: 'rgba(255, 0, 0, 0.1)',
+        }),
+      })}
+    />
+  );
+}
+
+const LayoutTextFields=()=> {
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        '& .MuiTextField-root': { width: '25ch' },
+      }}
+    >
+      <RedBar />
+      <TextField label={'margin="none"'} id="margin-none" />
+      <RedBar />
+      <TextField label={'margin="dense"'} id="margin-dense" margin="dense" />
+      <RedBar />
+      <TextField label={'margin="normal"'} id="margin-normal" margin="normal" />
+      <RedBar />
+    </Box>
+  );
+}
+export default LayoutTextFields
